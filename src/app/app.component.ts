@@ -4,7 +4,7 @@ import { CityTemperatureComponent } from "./city-temperature/city-temperature.co
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CityTemperatureComponent],
+  imports: [CityTemperatureComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

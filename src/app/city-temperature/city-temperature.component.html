@@ -1,1 +1,37 @@
-<p>city-temperature works!</p>
+
+<form [formGroup]="weatherForm">
+
+  <div class="field grid align-items-center">
+
+    <div class="col-8 md:col-6 flex align-items-center gap-2">
+      <input
+        id="location"
+        name="location"
+        type="text"
+        placeholder="Choose a city"
+        pInputText
+        formControlName="location"
+        autocomplete="on"
+        class="p-inputtext w-full"
+      />
+
+      <p-button
+        icon="pi pi-search"
+        label="Search"
+        (click)="findWeather()"
+        class="p-button-primary w-auto"
+        (keyup.enter)="findWeather()"
+        [disabled]="!this.weatherForm.valid"
+      ></p-button>
+    </div>
+
+    @if(weatherData){
+    <h3>Weather in {{ weatherData.address }}</h3>
+    <p>Temperature: {{ weatherData.currentConditions.dew }} °C</p>
+    <p>Description: {{ weatherData.description }}</p>
+    } @if(errorMessage){
+    {{ errorMessage }}
+    }
+  </div>
+
+</form>
