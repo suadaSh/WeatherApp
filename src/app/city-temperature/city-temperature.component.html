@@ -1,37 +1,46 @@
+<div
+  class="flex flex-column align-items-center justify-content-center h-screen w-full"
+>
+  <form [formGroup]="weatherForm" (ngSubmit)="findWeather()" class="w-6 p-2 text-center">
+    <div
+      class="field grid align-items-center align-items-center justify-content-center"
+    >
+      <div class="col-12 md:col-10 flex align-items-center gap-2">
+        <input
+          id="location"
+          name="location"
+          type="text"
+          placeholder="Choose a city"
+          pInputText
+          formControlName="location"
+          autocomplete="on"
+          class="p-inputtext w-full"
+        />
 
-<form [formGroup]="weatherForm">
-
-  <div class="field grid align-items-center">
-
-    <div class="col-8 md:col-6 flex align-items-center gap-2">
-      <input
-        id="location"
-        name="location"
-        type="text"
-        placeholder="Choose a city"
-        pInputText
-        formControlName="location"
-        autocomplete="on"
-        class="p-inputtext w-full"
-      />
-
-      <p-button
-        icon="pi pi-search"
-        label="Search"
-        (click)="findWeather()"
-        class="p-button-primary w-auto"
-        (keyup.enter)="findWeather()"
-        [disabled]="!this.weatherForm.valid"
-      ></p-button>
+        <p-button
+          icon="pi pi-search"
+          label="Search"
+          class="p-button-primary w-auto"
+          [disabled]="!this.weatherForm.valid"
+        ></p-button>
+      </div>
     </div>
-
-    @if(weatherData){
-    <h3>Weather in {{ weatherData.address }}</h3>
+    @if(isLoading){
+    <div class="col-12 md:col-10 flex justify-content-center mt-3">
+      <p-progress-spinner ariaLabel="loading"></p-progress-spinner>
+    </div>
+    }
+    <div class="col-12 md:col-10 flex justify-content-center mt-2">
+      @if(!weatherData && errorMessage){
+      <p-message [life]="3000" severity="warn" closable>{{
+        errorMessage
+      }}</p-message>
+      }
+    </div>
+    @if(weatherData && this.weatherForm.get('location')){
+    <h4>Weather in {{ weatherData.resolvedAddress }}</h4>
     <p>Temperature: {{ weatherData.currentConditions.dew }} °C</p>
     <p>Description: {{ weatherData.description }}</p>
-    } @if(errorMessage){
-    {{ errorMessage }}
     }
-  </div>
-
-</form>
+  </form>
+</div>
